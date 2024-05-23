@@ -16,18 +16,18 @@ jar {
     }
 }
 
-task copyJar(type: Copy) {
+tasks.register('copyJar', Copy) {
     dependsOn(jar)
     from file("$buildDir/libs/task09.jar")
     into file("$rootDir/src/main/resources/")
 }
 
-task buildImage(type: Exec) {
+tasks.register('buildImage', Exec) {
     dependsOn 'copyJar'
     commandLine 'docker', 'build', '-t', 'task09', './src/main/resources/'
 }
 
-task runDocker(type: Exec) {
+tasks.register('runDocker', Exec) {
     dependsOn 'buildImage'
     commandLine 'docker', 'run', '--name', 'task09', 'task09'
 }
